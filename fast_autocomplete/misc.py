@@ -2,6 +2,7 @@ import io
 import os
 import csv
 import sys
+
 try:
     import termios
     import fcntl
@@ -16,6 +17,14 @@ class FileNotFound(ValueError):
 def _check_file_exists(path):
     if not os.path.exists(path):
         raise FileNotFound(f'{path} does not exist')
+
+
+def my_tqdm(*args, **kwargs):
+    if os.environ.get("TQDM") == "1":
+        from tqdm import tqdm
+        return tqdm(*args, **kwargs)
+    else:
+        return args[0]
 
 
 def read_csv_gen(path_or_stringio, csv_func=csv.reader, **kwargs):
@@ -65,7 +74,8 @@ def read_single_keypress():
 
     """
     if fcntl is None or termios is None:
-        raise ValueError('termios and/or fcntl packages are not available in your system. This is possible because you are not on a Linux Distro.')
+        raise ValueError(
+            'termios and/or fcntl packages are not available in your system. This is possible because you are not on a Linux Distro.')
     fd = sys.stdin.fileno()
     # save old state
     flags_save = fcntl.fcntl(fd, fcntl.F_GETFL)
@@ -79,7 +89,7 @@ def read_single_keypress():
     # oflag
     attrs[1] &= ~termios.OPOST
     # cflag
-    attrs[2] &= ~(termios.CSIZE | termios. PARENB)
+    attrs[2] &= ~(termios.CSIZE | termios.PARENB)
     attrs[2] |= termios.CS8
     # lflag
     attrs[3] &= ~(termios.ECHONL | termios.ECHO | termios.ICANON |

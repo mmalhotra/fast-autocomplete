@@ -1,4 +1,5 @@
 # flake8: noqa
+import os
 import sys
 import pkg_resources
 
@@ -8,7 +9,12 @@ if pyversion < 3.6:
 
 __version__ = pkg_resources.get_distribution("fast-autocomplete").version
 
-from fast_autocomplete.dwg import AutoComplete
+if os.environ.get('OLD') == '1':
+    from fast_autocomplete.dwg_old import AutoComplete
+    from fast_autocomplete.dwg_old import FindStep
+else:
+    from fast_autocomplete.dwg import AutoComplete
+    from fast_autocomplete.dwg import FindStep
 from fast_autocomplete.draw import DrawGraphMixin
 from fast_autocomplete.demo import demo
 from fast_autocomplete.loader import autocomplete_factory

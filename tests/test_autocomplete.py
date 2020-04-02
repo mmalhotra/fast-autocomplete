@@ -6,8 +6,7 @@ from pprint import pprint
 from typing import NamedTuple
 
 from fast_autocomplete.misc import read_csv_gen
-from fast_autocomplete import AutoComplete, DrawGraphMixin
-from fast_autocomplete.dwg import FindStep
+from fast_autocomplete import AutoComplete, DrawGraphMixin, FindStep
 
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
