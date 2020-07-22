@@ -1,5 +1,5 @@
 # Fast Autocomplete 0.1.4
-
+#
 Fast autocomplete using Directed Acyclic Word Graph (DAWG) and Levenshtein Edit Distance.
 
 The results are cached via LFU (Least Frequently Used).
